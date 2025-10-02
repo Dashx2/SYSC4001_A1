@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     std::string execution;  //!< string to accumulate the execution output
 
     /******************ADD YOUR VARIABLES HERE*************************/
-
+    int current_time;
 
 
     /******************************************************************/
@@ -29,7 +29,15 @@ int main(int argc, char** argv) {
         auto [activity, duration_intr] = parse_trace(trace);
 
         /******************ADD YOUR SIMULATION CODE HERE*************************/
+        if (activity == "CPU"){
 
+        }
+        else if (activity =="SYSCALL"){
+
+        }
+        else if (activity == "ENDIO"){
+            
+        }
 
         /************************************************************************/
 
