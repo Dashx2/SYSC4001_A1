@@ -19,8 +19,8 @@ int main(int argc, char** argv) {
     std::string execution;  //!< string to accumulate the execution output
 
     /******************ADD YOUR VARIABLES HERE*************************/
-    int current_time;
-
+    int current_time = 0;
+    int context_save_time = 10;
 
     /******************************************************************/
 
@@ -30,13 +30,19 @@ int main(int argc, char** argv) {
 
         /******************ADD YOUR SIMULATION CODE HERE*************************/
         if (activity == "CPU"){
-
+            execution += std::to_string(current_time) + ", " + std::to_string(duration_intr) + ", CPU execution.\n";
+            current_time += duration_intr;
         }
         else if (activity =="SYSCALL"){
-
+        auto[execution2,current_time2] = intr_boilerplate(current_time,duration_intr,context_save_time,vectors);
+        execution += execution2;
+        current_time += current_time2;
+        
         }
-        else if (activity == "ENDIO"){
-            e
+        else if (activity == "END_IO"){
+            auto[execution2,current_time2] = intr_boilerplate(current_time,duration_intr,context_save_time,vectors);
+        execution += execution2;
+        current_time += current_time2;
         }
 
         /************************************************************************/
