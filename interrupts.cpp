@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
     int current_time = 0;
     int context_save_time = 10;
 
+
     /******************************************************************/
 
     //parse each line of the input trace file
@@ -34,15 +35,25 @@ int main(int argc, char** argv) {
             current_time += duration_intr;
         }
         else if (activity =="SYSCALL"){
-        auto[execution2,current_time2] = intr_boilerplate(current_time,duration_intr,context_save_time,vectors);
-        execution += execution2;
-        current_time += current_time2;
+            auto[execution2,current_time2] = intr_boilerplate(current_time,duration_intr,context_save_time,vectors);
+            execution += execution2;
+            current_time += current_time2;
         
+            execution += std::to_string(current_time) + ", " + std::to_string(40) + ", SYSCALL: run the ISR (device driver)\n";
+            execution += std::to_string(current_time) + ", " + std::to_string(40) + ", transfer data from device to memory\n";
+            
+            
+            //execution += std::to_string(current_time) + ", " + std::to_string(remain) + ", check for errors\n";
+            //current_time += remain;
         }
         else if (activity == "END_IO"){
             auto[execution2,current_time2] = intr_boilerplate(current_time,duration_intr,context_save_time,vectors);
-        execution += execution2;
-        current_time += current_time2;
+            execution += execution2;
+            current_time += current_time2;
+            
+            execution += std::to_string(current_time) + ", " + std::to_string(40) + ", ENDIO: run the ISR (device driver)";
+            
+
         }
 
         /************************************************************************/
