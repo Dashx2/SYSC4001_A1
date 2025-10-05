@@ -20,8 +20,8 @@ int main(int argc, char** argv) {
 
     /******************ADD YOUR VARIABLES HERE*************************/
     int current_time = 0;
-    int context_save_time = 10;
-
+    int context_save_time = 10;// will be changed to 20, 30,40 for further testing
+    int ISR_activity_time = 40;
 
     /******************************************************************/
 
@@ -37,22 +37,32 @@ int main(int argc, char** argv) {
         else if (activity =="SYSCALL"){
             auto[execution2,current_time2] = intr_boilerplate(current_time,duration_intr,context_save_time,vectors);
             execution += execution2;
-            current_time += current_time2;
+            current_time = current_time2;
         
-            execution += std::to_string(current_time) + ", " + std::to_string(40) + ", SYSCALL: run the ISR (device driver)\n";
-            execution += std::to_string(current_time) + ", " + std::to_string(40) + ", transfer data from device to memory\n";
+            execution += std::to_string(current_time) + ", " + std::to_string(ISR_activity_time) + ", SYSCALL: run the ISR (device driver)\n";
+            current_time += ISR_activity_time;
+            execution += std::to_string(current_time) + ", " + std::to_string(ISR_activity_time) + ", transfer data from device to memory\n";
+            current_time += ISR_activity_time;
+            /*unsure how I would calculate a proper timer for error check so I will be doing a simple 
+            multiplication of the CPU timer
+            */
+            int error_check_timer = delays.at(duration_intr) - (2*ISR_activity_time);
             
-            
-            //execution += std::to_string(current_time) + ", " + std::to_string(remain) + ", check for errors\n";
-            //current_time += remain;
+
+            execution += std::to_string(current_time) + ", " + std::to_string(error_check_timer) + ", check for errors\n";
+            current_time += error_check_timer;
         }
         else if (activity == "END_IO"){
             auto[execution2,current_time2] = intr_boilerplate(current_time,duration_intr,context_save_time,vectors);
             execution += execution2;
-            current_time += current_time2;
+            current_time = current_time2;
+
+            int error_device_status = delays.at(duration_intr)- (ISR_activity_time);
             
-            execution += std::to_string(current_time) + ", " + std::to_string(40) + ", ENDIO: run the ISR (device driver)";
-            
+            execution += std::to_string(current_time) + ", " + std::to_string(40) + ", ENDIO: run the ISR (device driver)\n";
+            current_time += 40;
+            execution += std::to_string(current_time) + ", " + std::to_string(error_device_status) + ", check device status\n";
+            current_time += error_device_status;
 
         }
 
