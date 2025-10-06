@@ -20,8 +20,8 @@ int main(int argc, char** argv) {
 
     /******************ADD YOUR VARIABLES HERE*************************/
     int current_time = 0;
-    int context_save_time = 10;// will be changed to 20, 30,40 for further testing
-    int ISR_activity_time = 40;
+    int context_save_time = 30;// will range from 10,20,30 for further testing
+    int ISR_activity_time = 200;
 
     /******************************************************************/
 
