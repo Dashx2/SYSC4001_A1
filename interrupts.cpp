@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
             execution += std::to_string(current_time) + ", " + std::to_string(ISR_activity_time) + ", transfer data from device to memory\n";
             current_time += ISR_activity_time;
             
-            int error_check_timer = delays.at(duration_intr) - (2*ISR_activity_time);
+            int error_check_timer = delays.at(duration_intr) +ISR_activity_time;
             
 
             execution += std::to_string(current_time) + ", " + std::to_string(error_check_timer) + ", check for errors\n";
@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
             execution += execution2;
             current_time = current_time2;
 
-            int error_device_status = delays.at(duration_intr)- (ISR_activity_time);
+            int error_device_status = delays.at(duration_intr) + ISR_activity_time;
             
             execution += std::to_string(current_time) + ", " + std::to_string(40) + ", ENDIO: run the ISR (device driver)\n";
             current_time += 40;
